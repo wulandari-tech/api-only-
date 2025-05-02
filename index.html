@@ -990,17 +990,28 @@
         });
     </script>
      <script>
-        document.addEventListener('mousemove', function(e) {
-            let trail = document.createElement('div');
-            trail.className = 'mouse-trail';
-            trail.style.left = e.clientX + 'px';
-            trail.style.top = e.clientY + 'px';
-            document.body.appendChild(trail);
+        <script>
+const texts = ["AI Power", "Secure", "Fast", "WanzoFC", "Tech", "API", "Smart"];
+setInterval(() => {
+  const el = document.createElement('div');
+  el.textContent = texts[Math.floor(Math.random() * texts.length)];
+  el.style.position = 'fixed';
+  el.style.left = `${Math.random() * window.innerWidth}px`;
+  el.style.top = `${Math.random() * window.innerHeight}px`;
+  el.style.color = '#58a6ff';
+  el.style.opacity = 0.7;
+  el.style.fontSize = '14px';
+  el.style.animation = 'fadeUp 3s ease-out forwards';
+  document.body.appendChild(el);
+  setTimeout(() => el.remove(), 3000);
+}, 2000);
+</script>
+<style>
+@keyframes fadeUp {
+  0% { transform: translateY(0); opacity: 0.7; }
+  100% { transform: translateY(-30px); opacity: 0; }
+}
+</style>
 
-            setTimeout(() => {
-                trail.remove();
-            }, 500);
-        });
-    </script>
 </body>
 </html>
