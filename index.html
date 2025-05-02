@@ -354,7 +354,47 @@
         #chat-widget-container.open {
             display: block;
         }
+.loading-button {
+  position: relative;
+  overflow: hidden; /* Menyembunyikan konten yang melebihi batas */
+  padding: 10px 20px;
+  background-color: #222;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.loading-button:hover {
+    background-color: #600; /* Contoh warna hover */
+}
 
+.loading-button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: linear-gradient(45deg, #0f0, #00f); /* Gradient warna */
+  background-size: 200% 200%;
+  animation: loadingAnimation 1s linear infinite; /* Animasi gradien */
+  opacity: 0;
+  transform: scale(0);
+  transition: opacity 0.3s ease;
+  transform-origin: center;
+}
+.loading-button:hover::before {
+    opacity: 1;
+    transform: scale(1);
+}
+
+
+@keyframes loadingAnimation {
+  0% { background-position: 0% 0%; }
+  50% { background-position: 100% 100%; }
+  100% { background-position: 0% 0%; }
+}
         /* Style untuk Balasan */
         .replying-to {
             background-color: #30363d;
@@ -392,6 +432,73 @@
             border-radius: 5px;
             padding: 10px;
         }
+        .glitch {
+  position: relative;
+  color: #0ff;
+  font-size: 2.5rem;
+  font-weight: bold;
+  letter-spacing: 2px;
+  animation: flicker 2s infinite;
+}
+.glitch::before,
+.glitch::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  color: #f0f;
+  clip: rect(0, 900px, 0, 0);
+}
+.glitch::before {
+  animation: glitchTop 2s infinite linear;
+}
+.glitch::after {
+  color: #0ff;
+  animation: glitchBottom 2s infinite linear;
+}
+
+@keyframes glitchTop {
+  0% { clip: rect(0, 9999px, 0, 0); }
+  5% { clip: rect(0, 9999px, 100%, 0); transform: translate(-2px, -2px); }
+  10% { clip: rect(0, 9999px, 0, 0); transform: none; }
+  100% { clip: rect(0, 9999px, 0, 0); transform: none; }
+}
+@keyframes glitchBottom {
+  0% { clip: rect(0, 9999px, 0, 0); }
+  5% { clip: rect(50%, 9999px, 100%, 0); transform: translate(2px, 2px); }
+  10% { clip: rect(0, 9999px, 0, 0); transform: none; }
+  100% { clip: rect(0, 9999px, 0, 0); transform: none; }
+}
+@keyframes flicker {
+  0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+    opacity: 1;
+  }
+  20%, 24%, 55% {
+    opacity: 0.5;
+  }
+}
+.card {
+  position: relative;
+  overflow: hidden;
+}
+.card::after {
+  content: "";
+  position: absolute;
+  top: -2px;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, #0ff, transparent);
+  animation: scan 2s linear infinite;
+}
+
+@keyframes scan {
+  0% { left: -100%; }
+  100% { left: 100%; }
+}
+
     </style>
 </head>
 
@@ -403,7 +510,7 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="welcomeModalLabel">Selamat Datang di WANZOFC TECH API!</h5>
+                 <h1 class="glitch" data-text="WANZOFC TECH API">WANZOFC TECH API</h1>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">×</span>
                     </button>
@@ -990,28 +1097,17 @@
         });
     </script>
      <script>
-        <script>
-const texts = ["AI Power", "Secure", "Fast", "WanzoFC", "Tech", "API", "Smart"];
-setInterval(() => {
-  const el = document.createElement('div');
-  el.textContent = texts[Math.floor(Math.random() * texts.length)];
-  el.style.position = 'fixed';
-  el.style.left = `${Math.random() * window.innerWidth}px`;
-  el.style.top = `${Math.random() * window.innerHeight}px`;
-  el.style.color = '#58a6ff';
-  el.style.opacity = 0.7;
-  el.style.fontSize = '14px';
-  el.style.animation = 'fadeUp 3s ease-out forwards';
-  document.body.appendChild(el);
-  setTimeout(() => el.remove(), 3000);
-}, 2000);
-</script>
-<style>
-@keyframes fadeUp {
-  0% { transform: translateY(0); opacity: 0.7; }
-  100% { transform: translateY(-30px); opacity: 0; }
-}
-</style>
+        document.addEventListener('mousemove', function(e) {
+            let trail = document.createElement('div');
+            trail.className = 'mouse-trail';
+            trail.style.left = e.clientX + 'px';
+            trail.style.top = e.clientY + 'px';
+            document.body.appendChild(trail);
 
+            setTimeout(() => {
+                trail.remove();
+            }, 500);
+        });
+    </script>
 </body>
 </html>
